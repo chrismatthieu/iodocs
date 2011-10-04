@@ -1,0 +1,268 @@
+{
+   "endpoints":[
+      {
+         "name":"Outbound SMS",
+         "methods":[
+            {
+               "MethodName":"SendSMS",
+               "Synopsis":"Sends an SMS message to any mobile phone number in the world. ",
+               "HTTPMethod":"POST",
+               "URI":"/smsmessaging/outbound/:senderAddress/requests",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"senderAddress",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"This is the SMSified phone number attached to your application to send the SMS message."
+	               },
+                  {
+                     "Name":"address",
+                     "Required":"Y",
+                     "Default":"1234567890",
+                     "Type":"string",
+                     "Description":"Target mobile phone number to receive the SMS message."
+                  },
+                  {
+                     "Name":"message",
+                     "Required":"Y",
+                     "Default":"This is a test message.",
+                     "Type":"string",
+                     "Description":"This is the message that you would like to send to the mobile device."
+                  },
+                  {
+                     "Name":"notifyURL",
+                     "Required":"N",
+                     "Default":"",
+                     "Type":"string",
+                     "Description":"Callback URL for status messages."
+                  }
+               ]
+            },
+            {
+               "MethodName":"DeliveryStatus",
+               "Synopsis":"If you want to check your delivery status before all your messages may have sent out (especially useful if you send an SMS to multiple addresses), you can pull a Delivery Status report using the requestId displayed in Response JSON. This is different than the other reporting options, as it functions in realtime - reporting only shows messages once they've successfully sent to the network or failed completely.",
+               "HTTPMethod":"GET",
+               "URI":"/smsmessaging/outbound/:senderAddress/requests/:requestId/deliveryInfos",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"senderAddress",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"This is the SMSified phone number attached to your application to send the SMS message."
+	               },
+	               {
+	                  "Name":"requestId",
+	                  "Required":"Y",
+	                  "Default":"",
+	                  "Type":"string",
+	                  "Description":"This is the SMSified Request ID received upon sending the SMS message."
+	               }
+               ]
+            },
+            {
+               "MethodName":"SetSubscribe",
+               "Synopsis":"If you want to check your delivery status before all your messages may have sent out (especially useful if you send an SMS to multiple addresses), you can pull a Delivery Status report using the requestId displayed in Response JSON. This is different than the other reporting options, as it functions in realtime - reporting only shows messages once they've successfully sent to the network or failed completely.",
+               "HTTPMethod":"POST",
+               "URI":"/smsmessaging/outbound/:senderAddress/subscriptions",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"senderAddress",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"This is the SMSified phone number attached to your application to send the SMS message."
+	               },
+	               {
+	                  "Name":"notifyURL",
+	                  "Required":"Y",
+	                  "Default":"",
+	                  "Type":"string",
+	                  "Description":"Instead of setting a callback URL using the notifyURL parameter every time you send a text message, you can set an outbound subscription. With a subscription, you set the callback URL one time and tie it to the phone number, then every time a text message goes out, you'll receive the delivery notification automatically. If you set a value for notifyURL when you send a text message and also have an active subscription, the delivery info will be sent to both URLs."
+	               }
+               ]
+            },
+            {
+               "MethodName":"ViewSubscribe",
+               "Synopsis":"If you want to check your delivery status before all your messages may have sent out (especially useful if you send an SMS to multiple addresses), you can pull a Delivery Status report using the requestId displayed in Response JSON. This is different than the other reporting options, as it functions in realtime - reporting only shows messages once they've successfully sent to the network or failed completely. Note: If you omit the senderAddress, you'll see a list of all your outbound subscriptions.",
+               "HTTPMethod":"GET",
+               "URI":"/smsmessaging/outbound/subscriptions?senderAddress=:senderAddress",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"senderAddress",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"This is the SMSified phone number attached to your application to send the SMS message."
+	               }
+               ]
+            },
+            {
+               "MethodName":"DeleteSubscribe",
+               "Synopsis":"If you want to check your delivery status before all your messages may have sent out (especially useful if you send an SMS to multiple addresses), you can pull a Delivery Status report using the requestId displayed in Response JSON. This is different than the other reporting options, as it functions in realtime - reporting only shows messages once they've successfully sent to the network or failed completely.",
+               "HTTPMethod":"DELETE",
+               "URI":"/smsmessaging/outbound/subscriptions/:subscriptionId",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"subscriptionId",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"This is the SMSified Subscription ID received upon setting subscribe."
+	               }
+               ]
+            }
+
+         ]
+      },
+      {
+         "name":"Inbound SMS",
+         "methods":[
+            {
+               "MethodName":"SetSubscribe",
+               "Synopsis":"If you want to check your delivery status before all your messages may have sent out (especially useful if you send an SMS to multiple addresses), you can pull a Delivery Status report using the requestId displayed in Response JSON. This is different than the other reporting options, as it functions in realtime - reporting only shows messages once they've successfully sent to the network or failed completely.",
+               "HTTPMethod":"POST",
+               "URI":"/smsmessaging/inbound/subscriptions",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"destinationAddress",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"Application phone number to receive messages."
+	               },
+	               {
+	                  "Name":"notifyURL",
+	                  "Required":"Y",
+	                  "Default":"",
+	                  "Type":"string",
+	                  "Description":"With an inbound subscription, every time a text message is sent to the phone number associated with the subscription, the message will be sent to your URL. This is the same thing you can achieve through the User Interface (outlined in the Receiving a Text Message Quickstart), but using the API you can attach multiple URLs though multiple subscriptions."
+	               }
+               ]
+            },
+            {
+               "MethodName":"ViewSubscribe",
+               "Synopsis":"It's likely if you're setting subscriptions, at some point you'll want to check out which ones are tied to a particular number. A simple GET on the proper URL gets you what you need. Note: If you omit the destinationAddress, you'll see a list of all your inbound subscriptions.",
+               "HTTPMethod":"GET",
+               "URI":"/smsmessaging/inbound/subscriptions?destinationAddress=:destinationAddress",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"destinationAddress",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"Application phone number to receive messages."
+	               }
+               ]
+            },
+            {
+               "MethodName":"DeleteSubscribe",
+               "Synopsis":"If you can create a subscription, you'll obviously need the ability to remove one as well. A DELETE with the right URL handles this for you.",
+               "HTTPMethod":"DELETE",
+               "URI":"/smsmessaging/inbound/subscriptions/:subscriptionId",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"subscriptionId",
+	                  "Required":"Y",
+	                  "Default":"1234567890",
+	                  "Type":"string",
+	                  "Description":"This is the SMSified Subscription ID received upon setting subscribe."
+	               }
+               ]
+            }
+
+         ]
+      },
+      {
+         "name":"Reporting",
+         "methods":[
+            {
+               "MethodName":"AllMessages",
+               "Synopsis":"SMSified also provides comprehensive reporting, both through Logs in the user interface and programmatically. Reporting can be used to retrieve information about an individual SMS or multiple SMS messages, using a variety of search and filter criteria such as date range, direction, from, to and status. To start, here's an example showing how to retrieve the information for all messages, with no search criteria or filters.",
+               "HTTPMethod":"GET",
+               "URI":"/messages",
+               "RequiresOAuth":"Y",
+               "parameters":[
+               ]
+            },
+            {
+               "MethodName":"IndividualMessage",
+               "Synopsis":"SMSified also provides comprehensive reporting, both through Logs in the user interface and programmatically. Reporting can be used to retrieve information about an individual SMS or multiple SMS messages, using a variety of search and filter criteria such as date range, direction, from, to and status. To start, here's an example showing how to retrieve the information for all messages, with no search criteria or filters.",
+               "HTTPMethod":"GET",
+               "URI":"/messages/:messageId",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"messageId",
+	                  "Required":"Y",
+	                  "Default":"",
+	                  "Type":"string",
+	                  "Description":"SMS Message Id returned in the response after sending a text message"
+	               }
+               ]
+            },
+            {
+               "MethodName":"FilteredByDate",
+               "Synopsis":"SMSified also provides comprehensive reporting, both through Logs in the user interface and programmatically. Reporting can be used to retrieve information about an individual SMS or multiple SMS messages, using a variety of search and filter criteria such as date range, direction, from, to and status. To start, here's an example showing how to retrieve the information for all messages, with no search criteria or filters.",
+               "HTTPMethod":"GET",
+               "URI":"/messages?startDate=:startDate&amp;endDate=:endDate",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"startDate",
+	                  "Required":"Y",
+	                  "Default":"2011-02-14",
+	                  "Type":"string",
+	                  "Description":"Starting date range for report on yyyy-mm-dd format."
+	               },
+	               {
+	                  "Name":"endDate",
+	                  "Required":"Y",
+	                  "Default":"2011-02-15",
+	                  "Type":"string",
+	                  "Description":"Ending date range for report on yyyy-mm-dd format."
+	               }
+	
+               ]
+            },
+            {
+               "MethodName":"FilteredByStatusDirection",
+               "Synopsis":"SMSified also provides comprehensive reporting, both through Logs in the user interface and programmatically. Reporting can be used to retrieve information about an individual SMS or multiple SMS messages, using a variety of search and filter criteria such as date range, direction, from, to and status. To start, here's an example showing how to retrieve the information for all messages, with no search criteria or filters.",
+               "HTTPMethod":"GET",
+               "URI":"/messages?status=:status&amp;direction=:direction",
+               "RequiresOAuth":"Y",
+               "parameters":[
+	               {
+	                  "Name":"status",
+	                  "Required":"Y",
+	                  "Default":"fail",
+	                  "Type":"string",
+	                  "Description":"Delivery status codes: pass or fail."
+	               },
+	               {
+	                  "Name":"direction",
+	                  "Required":"Y",
+	                  "Default":"in",
+	                  "Type":"string",
+	                  "Description":"Delivery direction codes: in or out."
+	               }
+	
+               ]
+            }
+
+         ]
+      }
+
+
+   ]
+}
+

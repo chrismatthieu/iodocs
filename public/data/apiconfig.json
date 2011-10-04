@@ -42,5 +42,12 @@
              "version": "1.0",
              "crypt": "HMAC-SHA1"
         }
+    },
+    "smsified": {
+        "name": "SMSified API",
+        "protocol": "http",
+        "baseURL": "api.smsified.com",
+        "publicPath": "/v1"
     }
+
 }
